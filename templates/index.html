@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Dashboard</title>
+</head>
+<body>
+    <h1>Stock Dashboard</h1>
+    
+    <form method="post" action="/">
+        <button type="submit" name="start">Start</button>
+        <button type="submit" name="stop">Stop</button>
+    </form>
+
+    <h2>Real-Time Stock Prices</h2>
+    <div id="real-time-chart">
+        <!-- Real-time chart will be displayed here -->
+    </div>
+
+    <h2>Historical Stock Prices</h2>
+    <div>
+        {{ historical_chart | safe }}
+    </div>
+
+    <script>
+        function updateRealTimeChart() {
+            // Make an AJAX GET request to the /real-time endpoint to fetch new data
+            $.get("/real-time", function(data) {
+                console.log("Received data from server:", data); // Debugging line
+                // Update the content of the "real-time-chart" div with the new chart data
+                $("#real-time-chart").html(data);
+            });
+        }
+    
+        // Call the updateRealTimeChart function periodically to update the real-time chart
+        setInterval(updateRealTimeChart, 5000); // Update every 5 seconds (adjust as needed)
+    </script>
+    
+</body>
+</html>
